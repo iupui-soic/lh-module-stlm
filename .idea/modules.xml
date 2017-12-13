@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/stlm.iml" filepath="$PROJECT_DIR$/stlm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api/stlm-api.iml" filepath="$PROJECT_DIR$/api/stlm-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/omod/stlm-omod.iml" filepath="$PROJECT_DIR$/omod/stlm-omod.iml" />
+    </modules>
+  </component>
+</project>
