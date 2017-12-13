@@ -1,9 +1,9 @@
-${moduleName}
+Student team-based learning monitor (STLM)
 ==========================
 
 Description
 -----------
-This is a very basic module which can be used as a starting point in creating a new module.
+This module will be working within the LibreHealth EHR system, to track the activities from students to complete a given task and suggest ways to do it in a better way, using mouse simulation.
 
 Building from Source
 --------------------
