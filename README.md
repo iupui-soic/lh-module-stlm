@@ -19,6 +19,10 @@ It will allow you to deploy any changes to your web
 resources such as jsp or js files without re-installing the module. The deploy path says 
 where OpenMRS is deployed.
 
+To build the module from source, clone this repo:
+
+git clone https://github.com/iupui-soic/lh-module-stlm.git
+
 Installation
 ------------
 1. Build the module to produce the .omod file.
