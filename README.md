@@ -21,7 +21,7 @@ where OpenMRS is deployed.
 
 To build the module from source, clone this repo:
 
-git clone https://github.com/iupui-soic/lh-module-stlm.git
+    git clone https://github.com/iupui-soic/lh-module-stlm.git
 
 Installation
 ------------
