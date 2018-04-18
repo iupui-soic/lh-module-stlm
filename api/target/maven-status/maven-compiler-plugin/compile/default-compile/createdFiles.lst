@@ -1,6 +1,0 @@
-org/openmrs/module/stlm/api/STLMService.class
-org/openmrs/module/stlm/STLMActivator.class
-org/openmrs/module/stlm/Item.class
-org/openmrs/module/stlm/STLMConfig.class
-org/openmrs/module/stlm/api/impl/STLMServiceImpl.class
-org/openmrs/module/stlm/api/dao/STLMDao.class
