@@ -1,0 +1,10 @@
+[
+  {
+    "id": "stlm.navbar",
+    "extensionPointId": "patientHeader.firstLineFragments",
+    "extensionParams": {
+      "provider": "stlm",
+      "fragment": "navbar"
+    }
+  }
+]

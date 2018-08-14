@@ -22,4 +22,10 @@
 
 	<context:component-scan base-package="org.openmrs.module.stlm.web.controller" />
 
+	<bean class="org.openmrs.ui.framework.StandardModuleUiConfiguration">
+		<property name="moduleId" value="stlm"/>
+	</bean>
+
 </beans>
+
+
