@@ -1,0 +1,159 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="stlm-annotation">
+    <template>
+
+        <div id="contextMenu">
+            <ul>
+                <li id="annotateThis"></li>
+                <li><input id="annotationField" type="text"/>
+                    <input type="button" on-click="saveAnnotation" id="saveButton" value="Submit">
+                    <input type="button" on-click="printContent" value="Print all annotations"></li>
+            </ul>
+        </div>
+
+        <style>
+            #contextMenu {
+                position: absolute;
+                display: none;
+            }
+
+            #contextMenu ul, #context-menu li {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                background: white;
+            }
+
+            #contextMenu {
+                border: solid 1px #CCC;
+            }
+
+            #contextMenu li {
+                border-bottom: solid 1px #CCC;
+            }
+
+            #contextMenu li:last-child {
+                border: none;
+            }
+
+            #contextMenu li a {
+                display: block;
+                padding: 5px 10px;
+                text-decoration: none;
+                color: blue;
+            }
+
+            #contextMenu li a:hover {
+                background: blue;
+                color: #FFF;
+            }
+
+            code {
+                padding: 1px 1px;
+                border: 1px dashed #adb5bd;
+                background-color: #f1f3f5;
+                font-family: "Droid Sans Mono", monospace;
+                font-size: 1rem;
+            }
+        </style>
+    </template>
+
+    <script>
+        class StlmAnnotation extends Polymer.Element {
+            static get is() {
+                return "stlm-annotation";
+            }
+
+            ready() {
+                super.ready();
+                var menuArea = document.getElementById('body-wrapper');
+                var menu = this.$.contextMenu;
+                var annotateThis = this.$.annotateThis;
+                var annotationField = this.$.annotationField;
+                menuArea.oncontextmenu = function (e) {
+                    var text = window.getSelection().toString();
+                    annotateThis.innerHTML = text;
+                    if (text.length > 0) {
+                        annotationField.value = window.localStorage.getItem('stlm-annotation:' + text);
+                        e.preventDefault();
+                        menu.style.left = e.pageX + 'px';
+                        menu.style.top = e.pageY + 'px';
+                        menu.style.display = 'block';
+                    } else {
+                        menu.style.display = 'none';
+                    }
+                }
+                this.highlightAnnotations();
+            }
+
+            saveAnnotation() {
+                var annotation = document.getElementsByTagName('stlm-annotation')[0].shadowRoot.getElementById('annotationField').value;
+                window.localStorage.setItem('stlm-annotation:' + document.getElementsByTagName('stlm-annotation')[0].shadowRoot.getElementById('annotateThis').innerHTML, annotation);
+                this.highlightAnnotations();
+                this.$.contextMenu.style.display = 'none';
+            }
+
+            highlightAnnotations() {
+                for (var a in localStorage) {
+                    if (a.includes('stlm-annotation:')) {
+                        var key = a.split(':')[1];
+                        var text = document.getElementById('body-wrapper').innerHTML;
+                        document.getElementById('body-wrapper').innerHTML = this.spliceSlice(text, key, '<code>', '</code>');
+                    }
+                }
+            }
+
+            spliceSlice(str, key, add, end) {
+                var beforeText = str.slice(0, str.indexOf(key));
+
+                //to avoid double highlighting
+                if (beforeText.slice(str.indexOf(key) - 6, str.indexOf(key)) == '<code>') {
+                    return str;
+                }
+
+                var afterText = str.slice(str.indexOf(key) + key.length);
+                return beforeText + (add || "") + key + (end || "") + afterText;
+            }
+
+            printContent() {
+                this.saveAnnotation();
+                var data = [];
+                for (var a in localStorage) {
+                    if (a.includes('stlm-annotation:')) {
+                        data.push([a.split(':')[1], localStorage.getItem(a)]);
+                    }
+                }
+                this.arrayToCSV(data);
+            }
+
+            arrayToCSV(twoDiArray) {
+                //  Modified from: http://stackoverflow.com/questions/17836273/
+                //  export-javascript-data-to-csv-file-without-server-interaction
+                var csvRows = [];
+                for (var i = 0; i < twoDiArray.length; ++i) {
+                    for (var j = 0; j < twoDiArray[i].length; ++j) {
+                        if (twoDiArray[i][j] != null) {
+                            if(twoDiArray[i][j].includes(',')) {
+                                twoDiArray[i][j] = '\"' + twoDiArray[i][j] + '\"';  // Handle elements that contain commas
+                            }
+                        }
+                    }
+                    csvRows.push(twoDiArray[i].join(','));
+                }
+                var csvString = csvRows.join('\r\n');
+                var a = document.createElement('a');
+                a.href = 'data:attachment/csv,' + encodeURIComponent(csvString);
+                a.target = '_blank';
+                a.download = 'annotations.csv';
+
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+
+        customElements.define(StlmAnnotation.is, StlmAnnotation);
+    </script>
+
+</dom-module>

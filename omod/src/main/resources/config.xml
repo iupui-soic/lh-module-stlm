@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <module configVersion="1.2">
-	
+
 	<!-- Base Module Properties -->
 	<id>${project.parent.artifactId}</id>
 	<name>${project.parent.name}</name>
@@ -13,10 +13,10 @@
 	</description>
 
 	<activator>org.openmrs.module.stlm.STLMActivator</activator>
-	
+
 	<!-- /Base Module Properties -->
 	<require_version>1.11.6</require_version>
-	
+
 	<!-- Extensions -->
 	<extension>
 		<point>org.openmrs.admin.list</point>
@@ -26,7 +26,25 @@
 	<aware_of_modules>
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
-	
+
+	<require_modules>
+        <require_module>
+            org.openmrs.module.appframework
+        </require_module>
+        <require_module>
+            org.openmrs.module.appui
+        </require_module>
+        <require_module>
+            org.openmrs.module.emrapi
+        </require_module>
+        <require_module>
+            org.openmrs.module.uiframework
+        </require_module>
+        <require_module>
+            org.openmrs.module.referenceapplication
+        </require_module>
+	</require_modules>
+
 	<!-- Internationalization -->
 	<!-- All message codes should start with @MODULE_ID@.* -->
 	<messages>
@@ -42,6 +60,6 @@
 		<file>messages_es.properties</file>
 	</messages>
 	<!-- /Internationalization -->
-	
+
 </module>
 
