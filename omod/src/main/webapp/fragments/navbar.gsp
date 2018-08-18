@@ -8,7 +8,7 @@
         return it
     }
     def logoIconUrl = addContextPath(configSettings?."logo-icon-url") ?: ui.resourceLink("uicommons", "images/logo/openmrs-with-title-small.png")
-    def logoLinkUrl = addContextPath(configSettings?."logo-link-url") ?: "/${ org.openmrs.ui.framework.WebConstants.CONTEXT_PATH }"
+    def logoLinkUrl = addContextPath(configSettings?."logo-link-url") ?: "/${org.openmrs.ui.framework.WebConstants.CONTEXT_PATH}"
 
     def multipleLoginLocations = (loginLocations.size > 1);
 
@@ -50,7 +50,7 @@
             var locationId = element.attr("locationId");
             var locationName = element.attr("locationName");
 
-            var data = { locationId: locationId };
+            var data = {locationId: locationId};
 
             jq("#spinner").show();
 
@@ -71,11 +71,11 @@
 
         <% if (enableUserAccountExt) { %>
         jq('.identifier').hover(
-            function(){
+            function () {
                 jq('.appui-toggle').show();
                 jq('.appui-icon-caret-down').hide();
             },
-            function(){
+            function () {
                 jq('.appui-toggle').hide();
                 jq('.appui-icon-caret-down').show();
             }
@@ -95,12 +95,13 @@
             <i class="icon-user small"></i>
             ${context.authenticatedUser.username ?: context.authenticatedUser.systemId}
             <% if (enableUserAccountExt) { %>
-            <i class="icon-caret-down appui-icon-caret-down link"></i><i class="icon-caret-up link appui-toggle" style="display: none;"></i>
+            <i class="icon-caret-down appui-icon-caret-down link"></i><i class="icon-caret-up link appui-toggle"
+                                                                         style="display: none;"></i>
             <ul id="user-account-menu" class="appui-toggle">
-                <% userAccountMenuItems.each{ menuItem  -> %>
+                <% userAccountMenuItems.each { menuItem -> %>
                 <li>
-                    <a id="" href="/${ contextPath }/${ menuItem.url }">
-                        ${ ui.message(menuItem.label) }
+                    <a id="" href="/${contextPath}/${menuItem.url}">
+                        ${ui.message(menuItem.label)}
                     </a>
                 </li>
                 <% } %>
@@ -139,11 +140,27 @@
 
 
     <% } %>
-	
+
     <script src="/openmrs/moduleResources/stlm/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-navbar.html">
     <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-annotation.html">
     <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-stat.html">
-	<stlm-navbar></stlm-navbar>
+    <script src="/openmrs/moduleResources/stlm/bower_components/mark.js/dist/mark.min.js"></script>
+    <style>
+    mark {
+        padding: 1px 1px;
+        border: 1px dashed #adb5bd;
+        background-color: #f1f3f5;
+        font-family: "Droid Sans Mono", monospace;
+        font-size: 1rem;
+    }
+    </style>
+    <stlm-navbar></stlm-navbar>
     <stlm-annotation></stlm-annotation>
+    <script>
+        jq(document).ready(function(){
+            var annotationElement = document.getElementsByTagName('stlm-annotation')[0];
+            annotationElement.initialize();
+        });
+    </script>
 </header>

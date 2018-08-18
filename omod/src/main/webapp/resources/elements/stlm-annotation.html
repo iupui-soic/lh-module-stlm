@@ -14,7 +14,7 @@
 
         <style>
             #contextMenu {
-                position: absolute;
+                position: fixed;
                 display: none;
             }
 
@@ -48,14 +48,6 @@
                 background: blue;
                 color: #FFF;
             }
-
-            code {
-                padding: 1px 1px;
-                border: 1px dashed #adb5bd;
-                background-color: #f1f3f5;
-                font-family: "Droid Sans Mono", monospace;
-                font-size: 1rem;
-            }
         </style>
     </template>
 
@@ -65,9 +57,8 @@
                 return "stlm-annotation";
             }
 
-            ready() {
-                super.ready();
-                var menuArea = this.$.selectableArea;
+            initialize() {
+                var menuArea = document.getElementById('body-wrapper');
                 var menu = this.$.contextMenu;
                 var annotateThis = this.$.annotateThis;
                 var annotationField = this.$.annotationField;
@@ -83,7 +74,7 @@
                     } else {
                         menu.style.display = 'none';
                     }
-                }
+                };
                 this.highlightAnnotations();
             }
 
@@ -94,26 +85,24 @@
                 this.$.contextMenu.style.display = 'none';
             }
 
+            deleteAnnotation() {
+                let text = document.getElementsByTagName('stlm-annotation')[0].shadowRoot.getElementById('annotateThis').innerHTML;
+                window.localStorage.removeItem('stlm-annotation:' + text);
+                var context = document.getElementById('body-wrapper');
+                var instance = new Mark(context);
+                instance.unmark(text, {separateWordSearch: false, accuracy: "exactly", caseSensitive: true});
+                this.$.contextMenu.style.display = 'none';
+            }
+
             highlightAnnotations() {
                 for (var a in localStorage) {
                     if (a.includes('stlm-annotation:')) {
                         var key = a.split(':')[1];
-                        var text = document.getElementById('body-wrapper').innerHTML;
-                        document.getElementById('body-wrapper').innerHTML = this.spliceSlice(text, key, '<code>', '</code>');
+                        var context = document.getElementById('body-wrapper');
+                        var instance = new Mark(context);
+                        instance.mark(key, {separateWordSearch: false, accuracy: "exactly", caseSensitive: true});
                     }
                 }
-            }
-
-            spliceSlice(str, key, add, end) {
-                var beforeText = str.slice(0, str.indexOf(key));
-
-                //to avoid double highlighting
-                if (beforeText.slice(str.indexOf(key) - 6, str.indexOf(key)) == '<code>') {
-                    return str;
-                }
-
-                var afterText = str.slice(str.indexOf(key) + key.length);
-                return beforeText + (add || "") + key + (end || "") + afterText;
             }
 
             printContent() {
@@ -134,7 +123,7 @@
                 for (var i = 0; i < twoDiArray.length; ++i) {
                     for (var j = 0; j < twoDiArray[i].length; ++j) {
                         if (twoDiArray[i][j] != null) {
-                            if(twoDiArray[i][j].includes(',')) {
+                            if (twoDiArray[i][j].includes(',')) {
                                 twoDiArray[i][j] = '\"' + twoDiArray[i][j] + '\"';  // Handle elements that contain commas
                             }
                         }
