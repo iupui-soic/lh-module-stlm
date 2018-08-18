@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/google-chart/google-chart.html">
+
+<dom-module id="stlm-activitycharts">
+    <template>
+        <google-chart
+                type='bar'
+                options='{"title": "Student activity report"}'
+                cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]'
+                rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'>
+        </google-chart>
+
+        <style>
+            google-chart {
+                height: 300px;
+                width: 400px;
+            }
+        </style>
+    </template>
+
+    <script>
+        class StlmActivityCharts extends Polymer.Element {
+            static get is() {
+                return "stlm-activitycharts";
+            }
+        }
+
+        customElements.define(StlmActivityCharts.is, StlmActivityCharts);
+    </script>
+
+</dom-module>

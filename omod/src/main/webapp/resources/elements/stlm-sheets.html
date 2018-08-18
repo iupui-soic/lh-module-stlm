@@ -1,0 +1,94 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/hot-table/hot-table.html">
+
+
+<dom-module id="stlm-sheets">
+
+    <template items="[[spreadsheets]]">
+        <style>
+            :host {
+                display: block;
+            }
+
+        </style>
+        <div style="float:right">
+            <button id="addbutton" onclick="addColumn()">Add Column</button>
+        </div>
+        <div1 style="float:left">
+            <hot-table datarows="{{itemsArray}}" id='spreadsheet' width="100%">
+            </hot-table>
+            <button id="submit" style="float: left" onclick="saveContent()">Save Sheet</button>
+            <button id="submit" style="float: right" onclick="printContent()">Print Sheet</button>
+        </div1>
+
+        <script>
+            function addColumn() {
+                var table = document.getElementsByTagName('stlm-sheets')[0].shadowRoot.getElementById('spreadsheet');
+                table.innerHTML += '<hot-column></hot-column>';
+            }
+
+            function saveContent() {
+                var ht = document.getElementsByTagName('stlm-sheets')[0].shadowRoot.getElementById('spreadsheet');
+                localStorage.setItem('tabledata', JSON.stringify(ht.getData()));
+            }
+
+            function printContent() {
+                saveContent();
+                var data = JSON.parse(localStorage.getItem('tabledata'));
+                arrayToCSV(data);
+            }
+
+            function arrayToCSV(twoDiArray) {
+                //  Modified from: http://stackoverflow.com/questions/17836273/
+                //  export-javascript-data-to-csv-file-without-server-interaction
+                var csvRows = [];
+                for (var i = 0; i < twoDiArray.length; ++i) {
+                    for (var j = 0; j < twoDiArray[i].length; ++j) {
+                        if (twoDiArray[i][j] != null) {
+                            twoDiArray[i][j] = '\"' + twoDiArray[i][j] + '\"';  // Handle elements that contain commas
+                        }
+                    }
+                    csvRows.push(twoDiArray[i].join(','));
+                }
+
+                var csvString = csvRows.join('\r\n');
+                var a = document.createElement('a');
+                a.href = 'data:attachment/csv,' + encodeURIComponent(csvString);
+                a.target = '_blank';
+                a.download = 'spreadsheet.csv';
+
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        </script>
+
+    </template>
+
+    <script>
+        class StlmSheets extends Polymer.Element {
+            static get is() {
+                return 'stlm-sheets';
+            }
+
+            ready() {
+                super.ready();
+                var spreadsheet = document.getElementsByTagName('stlm-sheets')[0].shadowRoot.getElementById('spreadsheet');
+                var data = JSON.parse(localStorage.getItem('tabledata'));
+                if (data != null) {
+                    if ((data == 'undefined' || data.length == 0)) {
+                        spreadsheet.innerHTML = '<hot-column></hot-column> <hot-column></hot-column> <hot-column></hot-column>';
+                    } else {
+                        for (var i = 0; i < data[0].length; i++) {
+                            spreadsheet.innerHTML += '<hot-column></hot-column>';
+                        }
+                    }
+                    spreadsheet.loadData(data);
+                }
+            }
+        }
+
+        window.customElements.define(StlmSheets.is, StlmSheets);
+    </script>
+</dom-module>

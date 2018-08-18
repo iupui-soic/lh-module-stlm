@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="stlm-diff">
+    <template>
+        <link href="elements/prettydiff/css/index.css" media="all" rel="stylesheet" type="text/css"/>
+        <div class="canvas" id="prettydiff"></div>
+
+        <script src="elements/prettydiff/lib//global.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/lib//language.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/lib//options.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/lib//finalFile.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/lib//safeSort.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/lib//csspretty.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/lib//csvpretty.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/lib//diffview.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/lib//jspretty.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/lib//markuppretty.js" type="application/javascript"></script>
+        <script src="elements/prettydiff/prettydiff.js" type="application/javascript"></script>
+    </template>
+
+    <script>
+        class StlmDiff extends Polymer.Element {
+            static get is() {
+                return "stlm-diff";
+            }
+
+            prettyTest(e) {
+                var args = {
+                    source: localStorage.getItem(e + '-source'),
+                    diff: localStorage.getItem(e + '-diff'),
+                    lang: "text"
+                };
+                var output = global.prettydiff.prettydiff(args);
+                this.$.prettydiff.innerHTML = output;
+            }
+        }
+        customElements.define(StlmDiff.is, StlmDiff);
+    </script>
+
+</dom-module>

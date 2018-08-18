@@ -7,7 +7,7 @@
 	<name>${project.parent.name}</name>
 	<version>${project.parent.version}</version>
 	<package>org.openmrs.module.stlm</package>
-	<author>weiweige</author>
+	<author>Saptarshi P, Asha Kiranmayee Surapaneni, Parvati Menon, Ashwini Kowkutla</author>
 	<description>
 			${project.parent.description}
 	</description>

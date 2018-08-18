@@ -2,12 +2,12 @@
 
 <dom-module id="stlm-annotation">
     <template>
-
         <div id="contextMenu">
             <ul>
                 <li id="annotateThis"></li>
                 <li><input id="annotationField" type="text"/>
                     <input type="button" on-click="saveAnnotation" id="saveButton" value="Submit">
+                    <input type="button" on-click="deleteAnnotation" id="deleteButton" value="Delete">
                     <input type="button" on-click="printContent" value="Print all annotations"></li>
             </ul>
         </div>
@@ -67,7 +67,7 @@
 
             ready() {
                 super.ready();
-                var menuArea = document.getElementById('body-wrapper');
+                var menuArea = this.$.selectableArea;
                 var menu = this.$.contextMenu;
                 var annotateThis = this.$.annotateThis;
                 var annotationField = this.$.annotationField;

@@ -1,0 +1,88 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-selection-column.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-sorter.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
+
+<dom-module id="stlm-activitytable">
+    <template>
+        <iron-ajax auto url="https://demo.vaadin.com/demo-data/1.0/people?count=20" handle-as="json"
+                   last-response="{{users}}"></iron-ajax>
+
+        <vaadin-grid theme="row-dividers" items="[[users.result]]" column-reordering-allowed multi-sort>
+
+            <vaadin-grid-selection-column auto-select frozen></vaadin-grid-selection-column>
+
+            <vaadin-grid-column width="9em">
+                <template class="header">
+                    <vaadin-grid-sorter path="firstName">First Name</vaadin-grid-sorter>
+                </template>
+                <template><a href="http://google.com">[[item.firstName]] [[item.lastName]]</a></template>
+            </vaadin-grid-column>
+
+            <vaadin-grid-column width="9em">
+                <template class="header">
+                    <vaadin-grid-sorter path="Username">Username</vaadin-grid-sorter>
+                </template>
+                <template>[[item.Username]]</template>
+            </vaadin-grid-column>
+
+            <vaadin-grid-column width="15em" flex-grow="2">
+                <template class="header">
+                    <vaadin-grid-sorter path="Course Name">Course Name</vaadin-grid-sorter>
+                </template>
+                <template>[[item.Course Name]], [[item.Course Name]]</template>
+            </vaadin-grid-column>
+
+            <vaadin-grid-column width="15em" flex-grow="2">
+                <template class="header">
+                    <vaadin-grid-sorter path="Role">Role</vaadin-grid-sorter>
+                </template>
+                <template>[[item.Role]], [[item.Role]]</template>
+            </vaadin-grid-column>
+
+            <vaadin-grid-column width="15em" flex-grow="2">
+                <template class="header">
+                    <vaadin-grid-sorter path="Last date logged in">Last date logged in</vaadin-grid-sorter>
+                </template>
+                <template>[[item.Last date logged in]], [[item.Last date logged in]]</template>
+            </vaadin-grid-column>
+
+            <vaadin-grid-column width="15em" flex-grow="2">
+                <template class="header">
+                    <vaadin-grid-sorter path="Last assignment submission date">Last assignment submission date </vaadin-grid-sorter>
+                </template>
+                <template>[[item.Last assignment submission date]], [[item.Last assignment submission date]]</template>
+            </vaadin-grid-column>
+
+            <vaadin-grid-column width="15em" flex-grow="2">
+                <template class="header">
+                    <vaadin-grid-sorter path="Activity status">Activity status </vaadin-grid-sorter>
+                </template>
+                <template>[[item.Activity status]], [[item.Activity status]]</template>
+            </vaadin-grid-column>
+
+
+            <vaadin-grid-column width="15em" flex-grow="2">
+                <template class="header">
+                    <vaadin-grid-sorter path="Progress report">Progress report </vaadin-grid-sorter>
+                </template>
+                <template>[[item.Progress report]], [[item.Progress report]]</template>
+            </vaadin-grid-column>
+
+        </vaadin-grid>
+    </template>
+
+    <script>
+        class StlmActivityTable extends Polymer.Element {
+            static get is() {
+                return "stlm-activitytable";
+            }
+
+            constructor() {
+                super();
+            }
+        }
+        customElements.define(StlmActivityTable.is, StlmActivityTable);
+    </script>
+
+</dom-module>

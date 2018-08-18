@@ -1,0 +1,161 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+
+<dom-module id="stlm-stat">
+    <template>
+        <style type="text/css">
+            .grid {
+                border-spacing: 0px;
+                font-family: Arial;
+                font-size: 12px;
+                width: 100%;
+            }
+
+            .grid th {
+                background-color: #3A393C;
+                color: #fff;
+                padding: 2px 10px;
+                text-align: left;
+            }
+
+            .grid tr:nth-child(even) {
+                background-color: #f5f5f5;
+                border: 1px solid black;
+            }
+
+            .grid tr:nth-child(odd) {
+                background-color: #ccc;
+                border: 1px solid black;
+            }
+
+            .grid tr:hover {
+                background-color: #664b00;
+                color: #FFF;
+            }
+
+            .grid td {
+                padding: 2px 10px;
+                vertical-align: bottom;
+                border: 1px solid black;
+            }
+
+        </style>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script>
+            function initiate() {
+                $.ajax({
+                    url: exportToTable()
+                });
+            }
+
+            function exportToTable() {
+                if (typeof (FileReader) != "undefined") {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var table = '<table id = "sensorValues" class ="grid">';
+                        var allRows = e.target.result.split(/\r?\n|\r/);
+                        for (var singleRow = 0; singleRow < allRows.length;
+                             singleRow++) {
+                            if (singleRow === 0) {
+                                table += '<thead>';
+                                table += '<tr>';
+                            } else {
+                                table += '<tr>';
+                            }
+                            var rowCells = allRows[singleRow].split(',');
+                            var infault = false;
+                            for (var rowCell = 0; rowCell < 2; rowCell++) {
+                                if (singleRow === 0) {
+                                    table += '<th>';
+                                    table += rowCells[rowCell];
+                                    table += '</th>';
+                                } else {
+                                    table += '<td>';
+                                    table += rowCells[rowCell];
+                                    table += '</td>';
+                                    var a = parseFloat(rowCells[rowCell]);
+                                }
+                            }
+                            if (singleRow === 0) {
+                                table += '</tr>';
+                                table += '</thead>';
+                                table += '<tbody>';
+                            } else {
+                                table += '</tr>';
+                            }
+                        }
+                        table += '</tbody>';
+                        table += '</table>';
+                        document.getElementsByTagName('stlm-stat')[0].shadowRoot.getElementById('tablespace').innerHTML = '';
+                        document.getElementsByTagName('stlm-stat')[0].shadowRoot.getElementById('tablespace').innerHTML = table;
+                    }//onload
+                    reader.readAsText(document.getElementsByTagName('stlm-stat')[0].shadowRoot.getElementById('csvfile').files[0]);
+                }// html supported
+                else {
+                    alert("Sorry! Your browser does not support HTML5!");
+                }
+            }
+
+            function getTableData(columnNum) {
+                var table = document.getElementsByTagName('stlm-stat')[0].shadowRoot.getElementById('sensorValues');
+                var colArray = Array.prototype.map.call(table.querySelectorAll('tr'), function (row) {
+                    return parseInt(row.cells[columnNum].textContent);
+                });
+                return colArray;
+            }
+        </script>
+        <div id="inputgroup" class="inputs" height="100%">
+            <h1>STATISTICAL ANALYSIS</h1>
+            <h2>Please upload the .csv file data on which you would like to perform T-Test.</h2>
+            <div>
+                <input type="file" id="csvfile"/>
+                <input type="button" id="viewfile" value="Submit" onclick="initiate()"/>
+            </div>
+            <br style="line-height: 5px"/>
+            <div>p-Value: <span id="pValueDiv"></span></div>
+            <div>t-statistic: <span id="tStatisticDiv"></span></div>
+            <br style="line-height: 5px"/>
+            <div id="tablespace"
+                 style="width:200px;height:250px;overflow-y:scroll;overflow-x:scroll;overflow: auto; border:thin; border-color:#000000;border-style: outset;">
+            </div>
+            <h3>click 'Perform T-Test' below to receive p and t-value.</h3>
+
+            <iron-ajax
+                    id="ajax"
+                    url={{posturl}}
+                    on-response="handleResponse"
+                    handle-as="text">
+            </iron-ajax>
+            <button type="submit" on-click="doTest">Perform T-Test</button>
+        </div>
+    </template>
+
+    <script>
+        class StlmStat extends Polymer.Element {
+            static get is() {
+                return 'stlm-stat';
+            }
+
+            static get properties() {
+                return {
+                    posturl: String
+                }
+            }
+
+            doTest() {
+                var sample1 = getTableData(0);
+                var sample2 = getTableData(1);
+                this.$.ajax.params = {'sample1': sample1, 'sample2': sample2};
+                this.$.ajax.generateRequest();
+            }
+
+            handleResponse(xhr) {
+                this.$.pValueDiv.innerHTML = xhr.detail.response.split(',')[0];
+                this.$.tStatisticDiv.innerHTML = xhr.detail.response.split(',')[1];
+            }
+        }
+
+        window.customElements.define(StlmStat.is, StlmStat);
+    </script>
+</dom-module>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <link href="css/index.css" media="all" rel="stylesheet" type="text/css"/>
+</head>
+<body class="white" id="prettydiff">
+<button type="button" onclick="prettyTest()">TESTING...</button>
+<div id="output"></div>
+<script>
+    function prettyTest() {
+        var args = {
+            source: "asdf",
+            diff: "asdd",
+            lang: "text"
+        };
+        var output = global.prettydiff.prettydiff(args);
+        document.getElementById('output').innerHTML = output;
+    }
+</script>
+
+<script src="lib/global.js" type="application/javascript"></script>
+<script src="lib/language.js" type="application/javascript"></script>
+<script src="lib/options.js" type="application/javascript"></script>
+<script src="lib/finalFile.js" type="application/javascript"></script>
+<script src="lib/safeSort.js" type="application/javascript"></script>
+<script src="lib/csspretty.js" type="application/javascript"></script>
+<script src="lib/csvpretty.js" type="application/javascript"></script>
+<script src="lib/diffview.js" type="application/javascript"></script>
+<script src="lib/jspretty.js" type="application/javascript"></script>
+<script src="lib/markuppretty.js" type="application/javascript"></script>
+<script src="prettydiff.js" type="application/javascript"></script>
+</body>
+</html>

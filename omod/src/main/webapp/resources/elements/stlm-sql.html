@@ -1,0 +1,257 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/juicy-ace-editor/juicy-ace-editor.html">
+
+<dom-module id="stlm-sql">
+    <template>
+        <table style="width: 100%">
+            <tr>
+                <td style="width:20%;">
+                    <ul class="tree">
+                        <li>
+                            <input type="checkbox" id="c1"/>
+                            <label class="tree-label" for="c1">Database</label>
+                                                        <ul>
+                                <li>
+                                    <input type="checkbox" id="c2"/>
+                                    <label for="c2" class="tree-label">Table 1</label>
+                                    <ul>
+                                        <li><span class="tree-label">Column 1</span></li>
+                                        <li><span class="tree-label">Column 2</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c3"/>
+                                    <label for="c3" class="tree-label">Table 2</label>
+                                    <ul>
+                                        <li><span class="tree-label">Column 1</span></li>
+                                        <li><span class="tree-label">Column 2</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c4"/>
+                                    <label for="c4" class="tree-label">Table 3</label>
+                                    <ul>
+                                        <li><span class="tree-label">Column 1</span></li>
+                                        <li><span class="tree-label">Column 2</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="c5"/>
+                                    <label for="c5" class="tree-label">Table 4</label>
+                                    <ul>
+                                        <li><span class="tree-label">Column 1</span></li>
+                                        <li><span class="tree-label">Column 2</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="tree">
+                        <li>
+                            <input type="checkbox" id="t1"/>
+                            <label class="tree-label" for="t1">Database 2</label>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="t2"/>
+                                    <label for="t2" class="tree-label">Table 1</label>
+                                    <ul>
+                                        <li><span class="tree-label">Column 1</span></li>
+                                        <li><span class="tree-label">Column 2</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="t3"/>
+                                    <label for="t3" class="tree-label">Table 2</label>
+                                    <ul>
+                                        <li><span class="tree-label">Column 1</span></li>
+                                        <li><span class="tree-label">Column 2</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="t4"/>
+                                    <label for="t4" class="tree-label">Table 3</label>
+                                    <ul>
+                                        <li><span class="tree-label">Column 1</span></li>
+                                        <li><span class="tree-label">Column 2</span></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="t5"/>
+                                    <label for="t5" class="tree-label">Table 4</label>
+                                    <ul>
+                                        <li><span class="tree-label">Column 1</span></li>
+                                        <li><span class="tree-label">Column 2</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+                <td style="width:80%" valign="top">
+                    <juicy-ace-editor id="sqlarea" style="height: 300px" mode="ace/mode/sql"></juicy-ace-editor>
+                    <div style="text-align: right"><input type="submit" value="Execute SQL"></div>
+                </td>
+            </tr>
+        </table>
+
+        <script>
+
+        </script>
+        <style>
+            /* ————————————————————–
+              Tree core styles
+            */
+            .tree {
+                margin: 1em;
+            }
+
+            .tree input {
+                position: absolute;
+                clip: rect(0, 0, 0, 0);
+            }
+
+            .tree input ~ ul {
+                display: none;
+            }
+
+            .tree input:checked ~ ul {
+                display: block;
+            }
+
+            /* ————————————————————–
+              Tree rows
+            */
+            .tree li {
+                line-height: 1.2;
+                position: relative;
+                padding: 0 0 1em 1em;
+            }
+
+            .tree ul li {
+                padding: 1em 0 0 1em;
+            }
+
+            .tree > li:last-child {
+                padding-bottom: 0;
+            }
+
+            /* ————————————————————–
+              Tree labels
+            */
+            .tree-label {
+                position: relative;
+                display: inline-block;
+                background: #fff;
+            }
+
+            label.tree-label {
+                cursor: pointer;
+            }
+
+            label.tree-label:hover {
+                color: #666;
+            }
+
+            /* ————————————————————–
+              Tree expanded icon
+            */
+            label.tree-label:before {
+                background: #000;
+                color: #fff;
+                position: relative;
+                z-index: 1;
+                float: left;
+                margin: 0 1em 0 -2em;
+                width: 1em;
+                height: 1em;
+                border-radius: 1em;
+                content: '+';
+                text-align: center;
+                line-height: .9em;
+            }
+
+            :checked ~ label.tree-label:before {
+                content: '–';
+            }
+
+            /* ————————————————————–
+              Tree branches
+            */
+            .tree li:before {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: -.5em;
+                display: block;
+                width: 0;
+                border-left: 1px solid #777;
+                content: "";
+            }
+
+            .tree-label:after {
+                position: absolute;
+                top: 0;
+                left: -1.5em;
+                display: block;
+                height: 0.5em;
+                width: 1em;
+                border-bottom: 1px solid #777;
+                border-left: 1px solid #777;
+                border-radius: 0 0 0 .3em;
+                content: '';
+            }
+
+            label.tree-label:after {
+                border-bottom: 0;
+            }
+
+            :checked ~ label.tree-label:after {
+                border-radius: 0 .3em 0 0;
+                border-top: 1px solid #777;
+                border-right: 1px solid #777;
+                border-bottom: 0;
+                border-left: 0;
+                bottom: 0;
+                top: 0.5em;
+                height: auto;
+            }
+
+            .tree li:last-child:before {
+                height: 1em;
+                bottom: auto;
+            }
+
+            .tree > li:last-child:before {
+                display: none;
+            }
+
+            .tree_custom {
+                display: block;
+                background: #eee;
+                padding: 1em;
+                border-radius: 0.3em;
+            }
+        </style>
+    </template>
+
+    <script>
+        class StlmSql extends Polymer.Element {
+            static get is() {
+                return 'stlm-sql';
+            }
+
+            ready() {
+                super.ready();
+                var dragElements = this.shadowRoot.querySelectorAll('.tree-label');
+                [].forEach.call(dragElements, function (element) {
+                    element.setAttribute('draggable', true);
+                    element.addEventListener("dragstart", function (event) {
+                        event.dataTransfer.setData("text/plain", event.target.innerHTML);
+                    });
+                });
+            }
+        }
+
+        window.customElements.define(StlmSql.is, StlmSql);
+    </script>
+</dom-module>
