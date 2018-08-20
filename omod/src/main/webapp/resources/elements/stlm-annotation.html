@@ -92,6 +92,7 @@
                 var instance = new Mark(context);
                 instance.unmark(text, {separateWordSearch: false, accuracy: "exactly", caseSensitive: true});
                 this.$.contextMenu.style.display = 'none';
+				this.highlightAnnotations();
             }
 
             highlightAnnotations() {
