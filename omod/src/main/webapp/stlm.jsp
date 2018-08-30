@@ -12,8 +12,7 @@
   </tr>
   <c:forEach var="user" items="${users}">
       <tr>
-        <td>${user.userId}</td>
-        <td>${user.systemId}</td>
+        <td>${user}</td>
       </tr>		
   </c:forEach>
 </table>
