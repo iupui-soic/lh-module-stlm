@@ -145,6 +145,7 @@
     <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-navbar.html">
     <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-annotation.html">
     <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-stat.html">
+    <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-sql.html">
     <script src="/openmrs/moduleResources/stlm/bower_components/mark.js/dist/mark.min.js"></script>
     <style>
     mark {
