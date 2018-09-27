@@ -9,7 +9,7 @@
                     <ul class="tree">
                         <li>
                             <input type="checkbox" id="db"/>
-                            <label class="tree-label" for="db">openmrs</label>
+                            <label class="tree-label" id="dbName" for="db">openmrs</label>
                             <ul id="tables">
                             </ul>
                         </li>
@@ -193,6 +193,7 @@
                         }
                     }
                     document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('tables').innerHTML = tree;
+                    document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('dbName').innerText = document.getElementById("usernameText").innerText;
                 });
             }
         }

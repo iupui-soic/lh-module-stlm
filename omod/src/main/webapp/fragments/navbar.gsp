@@ -93,7 +93,7 @@
     <ul class="user-options">
         <li class="identifier">
             <i class="icon-user small"></i>
-            ${context.authenticatedUser.username ?: context.authenticatedUser.systemId}
+            <div id="usernameText">${context.authenticatedUser.username ?: context.authenticatedUser.systemId}</div>
             <% if (enableUserAccountExt) { %>
             <i class="icon-caret-down appui-icon-caret-down link"></i><i class="icon-caret-up link appui-toggle"
                                                                          style="display: none;"></i>
@@ -146,6 +146,7 @@
     <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-annotation.html">
     <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-stat.html">
     <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-sql.html">
+    <link rel="import" href="/openmrs/moduleResources/stlm/elements/stlm-sheets.html">
     <script src="/openmrs/moduleResources/stlm/bower_components/mark.js/dist/mark.min.js"></script>
     <style>
     mark {

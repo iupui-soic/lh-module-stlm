@@ -1,5 +1,6 @@
 package org.openmrs.module.stlm.web.controller;
 
+import org.openmrs.api.context.Context;
 import org.openmrs.util.OpenmrsUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,11 @@ public class SqlRestController {
         Map<String, List<String>> tableCol = new HashMap<>();
         Class.forName("com.mysql.jdbc.Driver");
         Properties props = OpenmrsUtil.getRuntimeProperties("openmrs");
-        Connection con = DriverManager.getConnection(props.getProperty("connection.url"),
+        String curl = props.getProperty("connection.url");
+        String user = Context.getUserContext().getAuthenticatedUser().getSystemId();
+        String mysqlUrl = curl.substring(0, curl.lastIndexOf('/')) + "/" + user + "_db";
+        System.out.print(mysqlUrl);
+        Connection con = DriverManager.getConnection(mysqlUrl,
                 props.getProperty("connection.username"), props.getProperty("connection.password"));
         DatabaseMetaData md = con.getMetaData();
         ResultSet rsTable = md.getTables(null, null, "%", null);

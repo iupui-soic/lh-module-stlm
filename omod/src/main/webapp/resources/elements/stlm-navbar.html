@@ -80,8 +80,8 @@
                         icon="assignment-turned-in"></iron-icon>
                 </paper-button>
                 <paper-listbox slot="dropdown-content">
-                    <paper-item>Spreadsheet</paper-item>
-                    <paper-item>Data Flow Diagram</paper-item>
+                    <paper-item onclick="document.getElementById('body-wrapper').innerHTML = '<stlm-sheets></stlm-sheets>'">Spreadsheet</paper-item>
+                    <paper-item onclick="document.getElementById('body-wrapper').innerHTML = '<iframe src=&quot;moduleResources/stlm/elements/drawio/index.html&quot; width=&quot;100%&quot; height=&quot;800px&quot;></iframe>'">DFD</paper-item>
                     <paper-item on-tap="toggleDialog">Upload Files</paper-item>
                 </paper-listbox>
             </paper-menu-button>
