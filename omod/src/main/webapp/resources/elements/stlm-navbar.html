@@ -70,7 +70,7 @@
                     </template>
                 </paper-listbox>
             </paper-menu-button>
-            <paper-button style="width:20%" slot="top">Statistical Analysis&nbsp;<iron-icon
+            <paper-button onclick="document.getElementById('body-wrapper').innerHTML = '<stlm-stat posturl=&quot;/openmrs/ws/rest/v1/stlm/ttest&quot;></stlm-stat>'" style="width:20%" slot="top">Statistical Analysis&nbsp;<iron-icon
                     icon="social:poll"></iron-icon>
             </paper-button>
             <paper-button onclick="document.getElementById('body-wrapper').innerHTML = '<stlm-sql></stlm-sql>'" style="width:20%" slot="top">SQL&nbsp;<iron-icon icon="sort"></iron-icon>
@@ -81,7 +81,7 @@
                 </paper-button>
                 <paper-listbox slot="dropdown-content">
                     <paper-item onclick="document.getElementById('body-wrapper').innerHTML = '<stlm-sheets></stlm-sheets>'">Spreadsheet</paper-item>
-                    <paper-item onclick="document.getElementById('body-wrapper').innerHTML = '<iframe src=&quot;moduleResources/stlm/elements/drawio/index.html&quot; width=&quot;100%&quot; height=&quot;800px&quot;></iframe>'">DFD</paper-item>
+                    <paper-item onclick="document.getElementById('body-wrapper').innerHTML = '<iframe src=&quot;/openmrs/moduleResources/stlm/elements/drawio/index.html&quot; width=&quot;100%&quot; height=&quot;800px&quot;></iframe>'">Data Flow Diagram</paper-item>
                     <paper-item on-tap="toggleDialog">Upload Files</paper-item>
                 </paper-listbox>
             </paper-menu-button>
@@ -98,7 +98,7 @@
                             <paper-button disabled raised class="backbutton" on-tap="revertRecording">
                                 <iron-icon icon="undo"></iron-icon>
                             </paper-button>
-                            <paper-button disabled raised id="comparebutton" class="compare" onclick="document.getElementsByTagName('stlm-diff')[0].prettyTest(this.previousElementSibling.previousElementSibling.id)">
+                            <paper-button disabled raised id="comparebutton" class="compare" onclick="document.getElementById('body-wrapper').innerHTML = '<iframe src=&quot;/openmrs/moduleResources/stlm/elements/prettydiff/index.html&quot; width=&quot;100%&quot; height=&quot;800px&quot;></iframe>'">
                                 <iron-icon icon="image:compare"></iron-icon>
                             </paper-button>
                         </paper-item>
@@ -109,7 +109,7 @@
                             <paper-button disabled raised class="backbutton" on-tap="revertRecording">
                                 <iron-icon icon="undo"></iron-icon>
                             </paper-button>
-                            <paper-button disabled raised id="comparebutton" class="compare" onclick="document.getElementsByTagName('stlm-diff')[0].prettyTest(this.previousElementSibling.previousElementSibling.id)">
+                            <paper-button disabled raised id="comparebutton" class="compare" onclick="document.getElementById('body-wrapper').innerHTML = '<iframe src=&quot;/openmrs/moduleResources/stlm/elements/prettydiff/index.html&quot; width=&quot;100%&quot; height=&quot;800px&quot;></iframe>'">
                                 <iron-icon icon="image:compare"></iron-icon>
                             </paper-button>
                         </paper-item>

@@ -88,15 +88,20 @@
 </script>
 
 <header>
-
+    <title>OpenMRS</title>
+    <div class="logo">
+        <a href="/openmrs/referenceapplication/home.page">
+            <img src="/openmrs/ms/uiframework/resource/uicommons/images/logo/openmrs-with-title-small.png">
+        </a>
+    </div>
+    <link rel="icon" type="image/png" href="images/openmrs-favicon.png"/>
     <% if (context.authenticated) { %>
     <ul class="user-options">
         <li class="identifier">
             <i class="icon-user small"></i>
             <div id="usernameText">${context.authenticatedUser.username ?: context.authenticatedUser.systemId}</div>
             <% if (enableUserAccountExt) { %>
-            <i class="icon-caret-down appui-icon-caret-down link"></i><i class="icon-caret-up link appui-toggle"
-                                                                         style="display: none;"></i>
+            <i class="icon-caret-down appui-icon-caret-down link"></i><i class="icon-caret-up link appui-toggle" style="display: none;"></i>
             <ul id="user-account-menu" class="appui-toggle">
                 <% userAccountMenuItems.each { menuItem -> %>
                 <li>
