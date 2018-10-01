@@ -17,12 +17,27 @@
                 </td>
                 <td style="width:80%" valign="top">
                     <juicy-ace-editor id="sqlarea" style="height: 300px" mode="ace/mode/sql"></juicy-ace-editor>
-                    <div style="text-align: right"><input type="submit" value="Execute SQL"></div>
+                    <div style="text-align: right"><button onclick="executeQuery()">Execute SQL</button></div>
                 </td>
             </tr>
         </table>
+        <table id="queryResults"></table>
+
 
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script>
+            function executeQuery() {
+                $.ajax({
+                    url: "/openmrs/ws/rest/v1/stlm/sqlexecute",
+                    dataType: "json",
+                    method: 'POST',
+                    data: {'queryText': document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('sqlarea').value}
+                }).done(function (data) {
+                    $(document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('queryResults')).DataTable({data: data});
+                });
+            }
+        </script>
         <style>
             /* ————————————————————–
               Tree core styles
@@ -185,7 +200,7 @@
                     for (var key in data) {
                         if (data.hasOwnProperty(key)) {
                             tree += '<li><input type="checkbox" id="t1"/>' +
-                                    '<label for="t1" class="tree-label">' + key + '</label><ul>';
+                                '<label for="t1" class="tree-label">' + key + '</label><ul>';
                             for(var col of data[key]){
                                 tree += '<li><span class="tree-label">' + col + '</span></li>'
                             }
@@ -193,7 +208,7 @@
                         }
                     }
                     document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('tables').innerHTML = tree;
-                    document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('dbName').innerText = document.getElementById("usernameText").innerText;
+                    document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('dbName').innerText = document.getElementById("usernameText").innerText + '_db';
                 });
             }
         }

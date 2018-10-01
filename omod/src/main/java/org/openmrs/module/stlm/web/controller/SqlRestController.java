@@ -5,6 +5,7 @@ import org.openmrs.util.OpenmrsUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.*;
@@ -43,13 +44,18 @@ public class SqlRestController {
         con.close();
         return tableCol;
     }
-	/*@RequestMapping(value = "/rest/v1/stlm/sqlexecute", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/rest/v1/stlm/sqlexecute", method = RequestMethod.POST)
 	@ResponseBody
 	public List<List<String>> SqlQuery(@RequestParam("queryText") String queryText) throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
-		Properties props = OpenmrsUtil.getRuntimeProperties("openmrs");
-		Connection con = DriverManager.getConnection(props.getProperty("connection.url"),
-		    props.getProperty("connection.username"), props.getProperty("connection.password"));
+        Properties props = OpenmrsUtil.getRuntimeProperties("openmrs");
+        String curl = props.getProperty("connection.url");
+        String user = Context.getUserContext().getAuthenticatedUser().getSystemId();
+        String mysqlUrl = curl.substring(0, curl.lastIndexOf('/')) + "/" + user + "_db";
+        System.out.print(mysqlUrl);
+        Connection con = DriverManager.getConnection(mysqlUrl,
+                props.getProperty("connection.username"), props.getProperty("connection.password"));
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(queryText);
 	    ResultSetMetaData rsmd = rs.getMetaData();
@@ -66,5 +72,5 @@ public class SqlRestController {
 		rs.close();
 		con.close();
 		return results;
-	}*/
+	}
 }
