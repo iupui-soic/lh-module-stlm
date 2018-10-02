@@ -21,7 +21,7 @@ public class SqlRestController {
         Class.forName("com.mysql.jdbc.Driver");
         Properties props = OpenmrsUtil.getRuntimeProperties("openmrs");
         String curl = props.getProperty("connection.url");
-        String user = Context.getUserContext().getAuthenticatedUser().getSystemId();
+        String user = Context.getUserContext().getAuthenticatedUser().getUsername();
         String mysqlUrl = curl.substring(0, curl.lastIndexOf('/')) + "/" + user + "_db";
         System.out.print(mysqlUrl);
         Connection con = DriverManager.getConnection(mysqlUrl,
@@ -51,7 +51,7 @@ public class SqlRestController {
 		Class.forName("com.mysql.jdbc.Driver");
         Properties props = OpenmrsUtil.getRuntimeProperties("openmrs");
         String curl = props.getProperty("connection.url");
-        String user = Context.getUserContext().getAuthenticatedUser().getSystemId();
+        String user = Context.getUserContext().getAuthenticatedUser().getUsername();
         String mysqlUrl = curl.substring(0, curl.lastIndexOf('/')) + "/" + user + "_db";
         System.out.print(mysqlUrl);
         Connection con = DriverManager.getConnection(mysqlUrl,
