@@ -60,6 +60,12 @@ public class SqlRestController {
 		ResultSet rs = stmt.executeQuery(queryText);
 	    ResultSetMetaData rsmd = rs.getMetaData();
 	    List<List<String>> results = new ArrayList<>();
+        List<String> columnNames = new ArrayList<>();
+        for (int i=1; i<=rsmd.getColumnCount(); i++) {
+            String column_name = rsmd.getColumnName(i);
+            columnNames.add(column_name);
+        }
+        results.add(columnNames);
 	    while(rs.next()) {
 	        int numColumns = rsmd.getColumnCount();
 	        List<String> row = new ArrayList<>();

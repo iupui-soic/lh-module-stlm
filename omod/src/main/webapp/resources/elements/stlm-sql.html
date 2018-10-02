@@ -21,23 +21,36 @@
                 </td>
             </tr>
         </table>
-        <table id="queryResults"></table>
 
-
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
         <script>
             function executeQuery() {
+                $.noConflict();
                 $.ajax({
                     url: "/openmrs/ws/rest/v1/stlm/sqlexecute",
                     dataType: "json",
                     method: 'POST',
                     data: {'queryText': document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('sqlarea').value}
                 }).done(function (data) {
-                    $(document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('queryResults')).DataTable({data: data});
+                    var columnNames = data[0];
+                    var columns = new Array();
+                    for (i=0; i<columnNames.length; i++){
+                        var column = new Object();
+                        column.title = columnNames[i];
+                        columns[i] = column;
+                    }
+                    $(document.getElementsByTagName('stlm-sql')[0].shadowRoot.getElementById('queryResults')).DataTable({
+                        data: data.slice(1),
+                        columns: columns
+                    });
                 });
             }
         </script>
+        <hr><hr>
+        <table id="queryResults" style="text-align: center">
+        </table>
         <style>
             /* ————————————————————–
               Tree core styles
