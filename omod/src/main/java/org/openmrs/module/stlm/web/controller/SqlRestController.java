@@ -65,35 +65,46 @@ public class SqlRestController {
         Statement stmt = con.createStatement();
         List<List<String>> results = new ArrayList<>();
         List<String> columnNames = new ArrayList<>();
-        boolean status = stmt.execute(queryText);
-        if (status) {
-            ResultSet rs = stmt.getResultSet();
-            ResultSetMetaData rsmd = rs.getMetaData();
 
-            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                String column_name = rsmd.getColumnName(i);
-                columnNames.add(column_name);
-            }
-            results.add(columnNames);
-            while (rs.next()) {
-                int numColumns = rsmd.getColumnCount();
-                List<String> row = new ArrayList<>();
-                for (int i = 1; i <= numColumns; i++) {
+        try {
+        boolean status = stmt.execute(queryText);
+
+            if (status) {
+                ResultSet rs = stmt.getResultSet();
+                ResultSetMetaData rsmd = rs.getMetaData();
+
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     String column_name = rsmd.getColumnName(i);
-                    row.add(rs.getObject(column_name).toString());
+                    columnNames.add(column_name);
                 }
-                results.add(row);
+                results.add(columnNames);
+                while (rs.next()) {
+                    int numColumns = rsmd.getColumnCount();
+                    List<String> row = new ArrayList<>();
+                    for (int i = 1; i <= numColumns; i++) {
+                        String column_name = rsmd.getColumnName(i);
+                        row.add(rs.getObject(column_name).toString());
+                    }
+                    results.add(row);
+                }
+                rs.close();
+            } else {
+                int count = stmt.getUpdateCount();
+                String outputResult = "The no of column effected is " + count;
+                List<String> list = new ArrayList<>();
+                list.add(outputResult);
+                results.add(list);
             }
-            rs.close();
-        } else {
-            int count = stmt.getUpdateCount();
-            String outputResult = "The no of column effected is " + count;
+        } catch (SQLException e) {
             List<String> list = new ArrayList<>();
-            list.add(outputResult);
+            list.add(e.getMessage());
             results.add(list);
+            return(results);
+        } finally {
+            con.close();
         }
 
-        con.close();
+
         return results;
     }
 }
