@@ -30,7 +30,7 @@
 
             paper-listbox {
                 height: 200px;
-                width: 300px;
+                width: 150px;
             }
 
             paper-button {
@@ -60,7 +60,7 @@
             }
         </style>
         <paper-toolbar>
-            <paper-menu-button slot="top" style="width:20%">
+            <paper-menu-button slot="top" style="width:10%">
                 <paper-button slot="dropdown-trigger">[[selectedCourseName]]
                     <iron-icon icon="chrome-reader-mode"></iron-icon>
                 </paper-button>
@@ -70,7 +70,7 @@
                     </template>
                 </paper-listbox>
             </paper-menu-button>
-            <paper-button onclick="document.getElementById('body-wrapper').innerHTML = '<stlm-stat posturl=&quot;/openmrs/ws/rest/v1/stlm/ttest&quot;></stlm-stat>'" style="width:20%" slot="top">Statistical Analysis&nbsp;<iron-icon
+            <paper-button onclick="document.getElementById('body-wrapper').innerHTML = '<stlm-stat posturl=&quot;/openmrs/ws/rest/v1/stlm/ttest&quot;></stlm-stat>'" style="width:40%" slot="top">Statistical Analysis&nbsp;<iron-icon
                     icon="social:poll"></iron-icon>
             </paper-button>
             <paper-button onclick="document.getElementById('body-wrapper').innerHTML = '<stlm-sql></stlm-sql>'" style="width:20%" slot="top">SQL&nbsp;<iron-icon icon="sort"></iron-icon>

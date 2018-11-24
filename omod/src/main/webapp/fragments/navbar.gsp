@@ -99,7 +99,7 @@
     <ul class="user-options">
         <li class="identifier">
             <i class="icon-user small"></i>
-            <div id="usernameText">${context.authenticatedUser.username ?: context.authenticatedUser.systemId}</div>
+            <span id="usernameText">${context.authenticatedUser.username ?: context.authenticatedUser.systemId}</span>
             <% if (enableUserAccountExt) { %>
             <i class="icon-caret-down appui-icon-caret-down link"></i><i class="icon-caret-up link appui-toggle" style="display: none;"></i>
             <ul id="user-account-menu" class="appui-toggle">
